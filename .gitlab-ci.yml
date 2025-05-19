@@ -1,0 +1,26 @@
+variables:
+  NETLIFY_SITE_ID: '090cf0cb-fd39-4627-869a-370baf963f19'
+  VITE_APP_VERSION: $CI_COMMIT_SHORT_SHA
+
+stages:
+  - build
+#building the image233
+build_docker_image:
+  stage: .pre
+  image: docker:27
+  services:
+    - docker:27-dind
+  script:
+    - docker version
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - docker build --platform=linux/amd64 -t mypyimage4 -f ci/Dockerfile .
+    - docker image ls
+    - docker push mypyimage4
+
+# build_web:
+#   image: node:22-alpine
+#   stage: build
+#   script:
+#     - node --version
+#     - npm --version
+#     - env
