@@ -2,18 +2,19 @@ import requests
 import json
 
 
-def grant_access(username, resource_name, role):
-    print(f"\nAttempting to grant '{role}' access to '{resource_name}' for user '{username}'.")
-
-
-def process_data(item_name, year):
-    if not (1000 <= year <= 9999):
-        print("\nError: year must be a 4-digit number.")
-        return
-    print(f"\nProcessing data for '{item_name}' with year: {year}.")
-
-
 def manage_member_role(username: str, entity_name: str, role: str, entity_type: str = "project"):
+      """
+    Grants or changes the role of a user in a GitLab group or project.
+    Args:
+        gitlab_url (str): The base URL of your GitLab instance (e.g., 'https://gitlab.com').
+        private_token (str): Your GitLab personal access token with API access.
+        namespace_id (int): The ID of the group or project.
+        username (str): The username of the user to update.
+        role (str): The desired role for the user (e.g., 'Guest', 'Reporter', 'Developer', 'Maintainer', 'Owner').
+    Returns:
+        dict or None: The JSON response from the GitLab API upon successful update,
+         or None if an error occurred.
+    """
     gitlab_private_token = "glpat-CjWZz8kf3r2GJLxiyUEx"
     gitlab_base_url = "https://gitlab.com"
     headers = {'PRIVATE-TOKEN': gitlab_private_token}
@@ -144,7 +145,6 @@ def main_menu():
             resource = input("Enter repository or group name: ")
             role = input("Enter role (Reporter, Developer, Maintainer, Owner): ")
 
-            grant_access(username, resource, role)
             manage_member_role(username, resource, role)
 
             
@@ -154,7 +154,6 @@ def main_menu():
                 identifier_year = input("Enter a 4-digit year number: ")
                 if identifier_year.isdigit() and len(identifier_year) == 4:
                     year = int(identifier_year)
-                    #process_data(item, year)
                     get_items_by_year(item, year)
                     break
                 else:
