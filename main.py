@@ -4,7 +4,6 @@
 # Send data to web servers (POST, PUT, DELETE requests)
 import os
 import requests
-import sys
 
 # when  working with data that needs to be structured and easily exchanged over the internet.
 # It brings in Python's built-in json module.
