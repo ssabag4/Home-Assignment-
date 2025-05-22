@@ -6,3 +6,4 @@ black==20.8b1
 flake8==3.9.0
 pytest==6.2.2
 requests==2.31.0
+python-dotenv==1.1.0
