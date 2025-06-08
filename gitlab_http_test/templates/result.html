@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f4; color: #333; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1, h2 { color: #333; text-align: center; }
+        ul { list-style-type: none; padding: 0; }
+        li { background: #eee; margin-bottom: 10px; padding: 10px; border-radius: 5px; }
+        .back-link { display: block; text-align: center; margin-top: 20px; text-decoration: none; color: #007bff; }
+        .flash-messages { margin-top: 20px; padding: 10px; border-radius: 5px; }
+        .flash-messages.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .flash-messages.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GitLab API Results</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flash-messages">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <h2>{{ items|length }} {{ item_type }} created in {{ year }}</h2>
+        {% if items %}
+            <ul>
+                {% for item in items %}
+                    <li>
+                        <strong>Title:</strong> {{ item.title }}<br>
+                        <strong>ID:</strong> {{ item.id }}<br>
+                        <strong>Created At:</strong> {{ item.created_at }}<br>
+                        <strong>Web URL:</strong> <a href="{{ item.web_url }}" target="_blank">{{ item.web_url }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No {{ item_type }} found for the year {{ year }}.</p>
+        {% endif %}
+        <a href="{{ url_for('get_items') }}" class="back-link">Back to Get Items</a>
+        <a href="{{ url_for('index') }}" class="back-link">Back to Main Menu</a>
+    </div>
+</body>
+</html>
